@@ -137,9 +137,56 @@ Fathom webhook → fetch transcript → /raw/ → processing pipeline
 
 ---
 
+## ADR-009: Insight Note Format (Naming + Frontmatter)
+
+**Context**: Insight notes need stable IDs for linking, human-readable filenames, and structured metadata.
+
+**Decision**: Hybrid filename with minimal frontmatter schema.
+
+**Filename format**: `YYYY-MM-DD-XXXX-slug.md`
+```
+2026-02-04-7f3a-setting-boundaries-with-clients.md
+└─────────────┘ └─────────────────────────────────┘
+   stable ID              human-readable slug
+```
+
+- Date prefix for chronological sorting
+- 4-char random suffix (`7f3a`) guarantees uniqueness
+- Slug auto-generated from first ~5 words, user-editable
+- ID is `YYYY-MM-DD-XXXX` portion — stable even if slug changes
+
+**Frontmatter schema**:
+```yaml
+---
+id: 2026-02-04-7f3a
+parent: 2026-02-04-enhanced-client-meeting-acme
+tags:
+  - client-work
+  - boundaries
+  - professional-development
+  - parable-labs
+created: 2026-02-04
+source_type: meeting
+---
+```
+
+| Field | Required | Purpose |
+|-------|----------|---------|
+| `id` | Yes | Stable identifier for linking (matches filename prefix) |
+| `parent` | Yes | Links to the enhanced note this was extracted from |
+| `tags` | Yes | 5-15 tags for graph connectivity |
+| `created` | Yes | Date extracted (for sorting, filtering) |
+| `source_type` | Yes | `voice_note`, `meeting`, `email`, `article` — for filtering |
+
+**Fields intentionally omitted**:
+- `pillar` — tags already capture this
+- `status` — adds workflow complexity; defer until needed
+- `related` — let tags create connections; explicit links can come later
+- `source_date` — parent note has this; don't duplicate
+
+---
+
 ## Open Questions
 
-1. **Insight note file naming**: `YYYY-MM-DD-insight-slug.md`? Or use a unique ID? Slugs are human-readable but may collide. IDs are stable but opaque.
-2. **Frontmatter schema**: What fields does an insight note need? (parent_note, tags, date_extracted, source, pillar?)
-3. **Embedding model**: Which sentence embedding model for semantic search? `all-MiniLM-L6-v2` is lightweight. Larger models give better results.
-4. **Frontend framework**: React? Svelte? Next.js? Depends on mobile strategy (React → React Native path is natural).
+1. **Embedding model**: Which sentence embedding model for semantic search? `all-MiniLM-L6-v2` is lightweight. Larger models give better results.
+2. **Frontend framework**: React? Svelte? Next.js? Depends on mobile strategy (React → React Native path is natural).
