@@ -65,8 +65,8 @@ This two-tier structure solves the "source-bound" problem: enhanced notes organi
 
 ## Integrations (Planned)
 
-- **Fathom** — Meeting transcripts via API/webhook
-- **Wispr Flow** — Voice dictation transcripts
+- **Fathom** — Meeting transcripts via API/webhook (available on free plan)
+- **OpenAI Whisper API** — Voice transcription for in-app capture ($0.006/min)
 - **Google Calendar** — Morning briefing pulls today's schedule to surface relevant notes
 - **Content generation** (future) — LinkedIn, blog, Twitter posts from recombinant insights
 
@@ -113,6 +113,7 @@ This two-tier structure solves the "source-bound" problem: enhanced notes organi
 - **Backend**: Python / FastAPI
 - **Database**: SQLite (derived index — FTS5, embeddings, relationships)
 - **AI**: Claude API (processing, insight extraction, synthesis, content generation)
+- **Transcription**: OpenAI Whisper API (voice capture)
 - **File format**: Markdown with YAML frontmatter
 - **Frontend**: Web (framework TBD), then mobile
 - **File watching**: watchdog (Python)

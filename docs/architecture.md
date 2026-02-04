@@ -112,10 +112,34 @@ Captured during planning session, 2026-02-02.
 
 ---
 
+## ADR-008: Transcription & Integration APIs
+
+**Context**: Need transcription for voice capture in the app, and integration with meeting recording tools.
+
+**Research findings** (2026-02-04):
+- **Fathom**: Public API available on free plan. Transcripts, summaries, action items, webhooks. 60 req/min rate limit.
+- **Wispr Flow**: API exists but requires exclusive access approval. Not immediately available.
+
+**Decision**:
+- Use **OpenAI Whisper API** for voice transcription ($0.006/min, excellent quality, immediate access)
+- Use **Fathom API + webhooks** for meeting transcript ingestion (auto-trigger processing when meetings complete)
+
+**Rationale**:
+- Whisper API is the same underlying tech Wispr uses, no approval gates
+- Fathom webhooks enable true automation — no polling required
+- Design transcription as a pluggable interface; can swap providers later
+
+**Integration architecture**:
+```
+Voice capture (app) → Whisper API → transcript → /raw/ → processing pipeline
+Fathom webhook → fetch transcript → /raw/ → processing pipeline
+```
+
+---
+
 ## Open Questions
 
 1. **Insight note file naming**: `YYYY-MM-DD-insight-slug.md`? Or use a unique ID? Slugs are human-readable but may collide. IDs are stable but opaque.
 2. **Frontmatter schema**: What fields does an insight note need? (parent_note, tags, date_extracted, source, pillar?)
 3. **Embedding model**: Which sentence embedding model for semantic search? `all-MiniLM-L6-v2` is lightweight. Larger models give better results.
 4. **Frontend framework**: React? Svelte? Next.js? Depends on mobile strategy (React → React Native path is natural).
-5. **Fathom/Wispr API availability**: Need to verify what's possible with current plans.

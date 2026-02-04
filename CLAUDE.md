@@ -54,8 +54,8 @@ Knowledge-/
 - **File watching**: watchdog or similar for /raw/ folder monitoring
 
 ### Key Integrations (planned)
-- **Fathom**: Meeting transcripts via API/webhook (need to verify plan supports it)
-- **Wispr Flow**: Voice dictation transcripts (need to verify API availability)
+- **Fathom**: Meeting transcripts via API/webhook (confirmed: available on free plan, webhooks for automation)
+- **OpenAI Whisper API**: Voice transcription for in-app capture ($0.006/min)
 - **Google Calendar**: Morning briefing pulls today's schedule to surface relevant notes
 
 ### Content Generation (architect for later, don't build yet)
