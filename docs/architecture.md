@@ -186,7 +186,9 @@ source_type: meeting
 
 ---
 
-## Open Questions
+## Deferred Decisions
 
-1. **Embedding model**: Which sentence embedding model for semantic search? `all-MiniLM-L6-v2` is lightweight. Larger models give better results.
-2. **Frontend framework**: React? Svelte? Next.js? Depends on mobile strategy (React → React Native path is natural).
+These don't need to be resolved before starting Phase 1:
+
+1. **Embedding model** (Phase 1, later): Start with `all-MiniLM-L6-v2` — lightweight, good enough. Swap if quality becomes an issue.
+2. **Frontend framework** (Phase 2): Decide when starting web UI. React is the safe choice if mobile React Native is likely.
